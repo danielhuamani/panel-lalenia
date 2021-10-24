@@ -38,8 +38,12 @@ export default {
       ],
       text: null,
       flag: null,
-      value: null,
-      navbar: {}
+      value: {
+        title: ''
+      },
+      navbar: {
+        title: ''
+      }
     };
   },
   mounted() {
@@ -175,11 +179,6 @@ export default {
         </div>
         <b-dropdown right variant="black" toggle-class="header-item" menu-class="dropdown-menu-end">
           <template v-slot:button-content>
-            <img
-              class="rounded-circle header-profile-user"
-              src="@/assets/images/users/avatar-1.jpg"
-              alt="Header Avatar"
-            />
             <span class="d-none d-xl-inline-block ms-1">Hola</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </template>

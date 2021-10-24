@@ -2,19 +2,22 @@
 import {
     layoutComputed
 } from "@/state/helpers";
+import Notification from "@/components/base/notification";
 import Vertical from "./vertical";
-import Horizontal from "./horizontal";
 
 export default {
     components: {
         Vertical,
-        Horizontal,
+        Notification
     },
     data() {
         return {};
     },
     computed: {
         ...layoutComputed,
+        getAlert() {
+            return this.$store.getters["notification/getAlert"];
+        }
     },
     methods: {},
     mounted() {
@@ -25,12 +28,9 @@ export default {
 
 <template>
 <div>
-    <Vertical v-if="layoutType === 'vertical'" :layout="layoutType">
+    <Notification v-if="getAlert.is_alert" :alert="getAlert" />
+    <Vertical layout="vertical">
         <slot />
     </Vertical>
-
-    <Horizontal v-if="layoutType === 'horizontal'" :layout="layoutType">
-        <slot />
-    </Horizontal>
 </div>
 </template>

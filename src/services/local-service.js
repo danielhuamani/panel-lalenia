@@ -6,7 +6,7 @@ class LocalService {
     return response
   }
   detail(id) {
-    const response = axios.get(`/local/${id}/detail`)
+    const response = axios.get(`/local/${id}/detail/`)
     return response
   }
 }

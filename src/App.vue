@@ -1,8 +1,6 @@
 <script>
 import appConfig from "@/app.config";
 
-import { notificationMethods } from "@/state/helpers";
-
 export default {
   name: "app",
   page: {
@@ -22,11 +20,10 @@ export default {
     // eslint-disable-next-line no-unused-vars
     $route(to, from) {
       // clear alert on location change
-      this.clearNotification();
+      // this.clearNotification();
     },
   },
   methods: {
-    clearNotification: notificationMethods.clear,
   },
 };
 </script>

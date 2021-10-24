@@ -43,16 +43,26 @@
             </form>
           </div>
         </div>
-        <h4 class="card-title mb-4 mt-4">Zonas Reparto</h4>
+        <h4 class="card-title mb-4 mt-4">Zonas Reparto <a href="" @click.prevent="openModalCreate()"  class="text-success">(Crear <i class="bx bx-edit"></i>)</a> </h4>
         <div class="row">
-          <div class="col-3">
+          <!-- <div class="col-3">
             <div class="zone ">
               <a href="#" class="text-success stretched-link" @click.prevent="openModalCreate()">Crear Zona</a>
+            </div>
+          </div> -->
+          <div class="col-3 mb-4" v-for="(driver, index) in drivers" :key="driver.id">
+            <div class="zone ">
+              <div class="" @click="openModalUpdate(driver, index)">
+                <p class="text-success " >{{driver.name}} </p>
+              </div>
+              <div class="text-danger mt-1" @click="openModalDelete(driver)">Eliminar <i class="bx bx-trash"></i></div>
             </div>
           </div>
         </div>
       </div>
-      <b-modal id="modal-xl" size="xl" title="Crear Zona">Hello Extra Large Modal!</b-modal>
+      <ZoneCreateModal v-if="openModalZoneCreate" :google="google" :local="data" @close="openModalZoneCreate = false" @closeUpdate="reload()"></ZoneCreateModal>
+      <ZoneUpdateModal v-if="openModalZoneUpdate" :google="google" :local="data" :zone-driver="zoneDriver" :index="zoneDriverIndex" :drivers="drivers" @close="openModalZoneUpdate = false" @closeUpdate="closeUpdate"></ZoneUpdateModal>
+      <ZoneDeleteModal v-if="openModalZoneDelete" :zone-driver="zoneDriver" @close="openModalZoneDelete = false" @closeDelete="reload()"></ZoneDeleteModal>
     </div>
   </Layout>
 </template>
@@ -61,13 +71,18 @@ import Layout from "@/layouts/main";
 import appConfig from "@/app.config";
 import PageHeader from "@/components/page-header";
 import LocalService from "@/services/local-service";
+import LocalDriverService from "@/services/local-driver-service";
 import { Loader } from '@googlemaps/js-api-loader';
+import ZoneCreateModal from '@/components/local/zone-create';
+import ZoneUpdateModal from '@/components/local/zone-update';
+import ZoneDeleteModal from '@/components/local/zone-delete';
 
 /**
  * Dashboard Component
  */
 const GOOGLE_APIKEY = process.env.VUE_APP_GOOGLE_APIKEY
 export default {
+  name: "LocalDetail",
   page: {
     title: "Local Detalle",
     meta: [
@@ -80,6 +95,9 @@ export default {
   components: {
     Layout,
     PageHeader,
+    ZoneCreateModal,
+    ZoneUpdateModal,
+    ZoneDeleteModal
   },
   data() {
     return {
@@ -90,27 +108,45 @@ export default {
         location: null
       },
       google: null,
-      map: null
+      map: null,
+      openModalZoneCreate: false,
+      openModalZoneUpdate: false,
+      openModalZoneDelete: false,
+      drivers: [],
+      zoneDriver: null,
+      zoneDriverIndex: null
     }
   },
   created() {
-    
+    console.log("ddireves")
+    this.getDrivers()
   },
   mounted() {
     const loader = new Loader({
       apiKey: GOOGLE_APIKEY,
       version: 3,
-      libraries: ["places"]
+      libraries: ["places", "drawing"]
     });
     loader
       .load()
-      .then((google) => {
-        this.google = google
-        this.getData()
-      })
-      .catch(e => {
-        console.log(e)
-      });
+        .then((google) => {
+          this.google = google;
+          const element = document.getElementById("map")
+          this.map = new this.google.maps.Map(element, {
+            zoom: 13,
+            center: {
+              lng: -77.0653445,
+              lat: -12.031236
+            },
+            mapTypeControl: false
+          });
+          this.map.setZoom(13);
+          this.getData()
+        })
+        .catch(e => {
+          console.log(e)
+        });
+    
   },
   methods: {
     getData() {
@@ -127,15 +163,6 @@ export default {
       if(this.data.location) {
         const lat = this.data.location.coordinates[1]
         const lng = this.data.location.coordinates[0]
-        this.map = new this.google.maps.Map(document.getElementById("map"), {
-          zoom: 10,
-          center: {
-            lat: lat,
-            lng: lng
-          },
-          mapTypeControl: false
-        })
-        this.map.setZoom(16)
         this.createMaker(lat, lng) 
         if(this.data.geometria) {
           this.createPolygon(this.data.geometria.coordinates[0])
@@ -157,27 +184,54 @@ export default {
       this.map.setCenter(latLng)
     },
     createPolygon(coordinates) {
-      const polygon = []
-      for (let j = coordinates.length - 1; j >= 0; j--){
-        polygon.push({
-          lat: coordinates[j][1],
-          lng: coordinates[j][0]
-        })
-      }
-      console.log(polygon)
+      const paths = coordinates.map((val) => {
+        return {
+          lat: val[1],
+          lng: val[0]
+        };
+      });
       const bermudaTriangle = new this.google.maps.Polygon({
-        paths: polygon,
+        paths: [paths],
         strokeColor: '#000',
         strokeOpacity: 0.3,
         strokeWeight: 2,
         fillColor: '#3ca868',
-        fillOpacity: 0.2
+        fillOpacity: 0.3
       })
       bermudaTriangle.setMap(this.map)
       bermudaTriangle.setVisible(true)
     },
     openModalCreate() {
-      this.$bvModal.show('modal-xl')
+      this.openModalZoneCreate = true
+    },
+    openModalDelete(driver) {
+      console.log(driver, "open delete")
+      this.openModalZoneDelete = true
+      this.zoneDriver = driver
+    },
+    openModalUpdate(driver, index) {
+      console.log('update')
+      this.openModalZoneUpdate = true
+      this.zoneDriver = driver
+      this.zoneDriverIndex = index
+    },
+    reload() {
+      this.openModalZoneCreate = false
+      this.openModalZoneDelete = false
+      this.getDrivers()
+    },
+    async getDrivers() {
+      const response  = await LocalDriverService.list(this.$route.params.id)
+      this.drivers = response.data
+    },
+    closeUpdate(data) {
+      console.log(data, 'data')
+      let driver = data.driver
+      let index = data.index
+      this.drivers[index] = driver
+      this.openModalZoneUpdate = false
+      this.zoneDriver = null
+      this.zoneDriverIndex = null
     }
   }
 };
@@ -190,9 +244,10 @@ export default {
   .zone{
     border: 1px dashed #343a40;
     padding: 15px;
-    display: flex;
+    display:flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     min-height: 100px;
   }
 </style>

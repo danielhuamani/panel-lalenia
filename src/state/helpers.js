@@ -38,12 +38,6 @@ export const authFackMethods = mapActions("authfack", [
   "logout",
 ])
 
-export const notificationMethods = mapActions("notification", [
-  "success",
-  "error",
-  "clear",
-])
-
 export const todoComputed = {
   ...mapState("todo", {
     todos: (state) => state.todos,

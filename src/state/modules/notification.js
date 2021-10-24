@@ -1,31 +1,26 @@
 export const state = {
-    type: null,
-    message: null
-};
-
+  alert: {
+    type: "",
+    msg: "",
+    is_alert: false,
+  },
+}
 export const mutations = {
-    success(state, message) {
-        state.type = 'alert-success';
-        state.message = message;
-    },
-    error(state, message) {
-        state.type = 'alert-danger';
-        state.message = message;
-    },
-    clear(state) {
-        state.type = null;
-        state.message = null;
-    }
-};
+  SET_ALERT(state, value) {
+    state.alert.type = value.type
+    state.alert.msg = value.msg
+    state.alert.is_alert = value.is_alert
+  },
+}
 
 export const actions = {
-    success({ commit }, message) {
-        commit('success', message);
-    },
-    error({ commit }, message) {
-        commit('error', message);
-    },
-    clear({ commit }) {
-        commit('clear');
-    }
-};
+  setAlert({ commit }, alert) {
+    commit("SET_ALERT", alert)
+  },
+}
+
+export const getters = {
+  getAlert(state) {
+    return state.alert
+  },
+}
