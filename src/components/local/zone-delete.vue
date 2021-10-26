@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal v-model="show" id="zone-create-modal" size="xl" title="Eliminar Zona" :scrollable="true" @hidden="hiddenModel">
+    <b-modal v-model="show" id="zone-create-modal" size="xl" title="Eliminar Cuadrante de Cobertura" :scrollable="true" @hidden="hiddenModel">
       <b-container fluid>
           <div class="row">
             <div class="col-12">

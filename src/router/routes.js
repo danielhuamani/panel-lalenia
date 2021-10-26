@@ -8,22 +8,6 @@ export default [
     component: () => import("../views/Dashboard"),
   },
   {
-    path: "/cobertura-zonas",
-    name: "coverage_moto",
-    meta: {
-      authRequired: true,
-    },
-    component: () => import("../views/coverage-moto/CoverageMotoList"),
-  },
-  {
-    path: "/cobertura-zonas/crear",
-    name: "coverage_moto_create",
-    meta: {
-      authRequired: true,
-    },
-    component: () => import("../views/coverage-moto/CoverageMotoCreate"),
-  },
-  {
     path: "/locales",
     name: "local_list",
     meta: {

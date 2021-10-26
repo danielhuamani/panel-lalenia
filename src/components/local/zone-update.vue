@@ -1,9 +1,15 @@
 <template>
   <div>
-    <b-modal v-model="show" id="zone-create-modal" size="xl" title="Crear Zona" :scrollable="true" @hidden="hiddenModel">
+    <b-modal v-model="show" id="zone-create-modal" size="xl" title="Crear Cuadrante de Cobertura" :scrollable="true" @hidden="hiddenModel">
       <b-container fluid>
+          <div class="">
+            <div class="form-check form-check-success mb-3">
+              <input type="checkbox" id="formCheckcolor1" v-model="data.is_active" class="form-check-input">
+              <label for="formCheckcolor1" class="form-check-label"> Activo </label>
+            </div>
+          </div>
           <div role="group" class="form-row form-group mb-3">
-              <label for="email" class="col-12 col-form-label">Nombre</label>
+            <label for="email" class="col-12 col-form-label">Nombre</label>
             <div class="col">
               <b-form-input
                   id="input-1"
@@ -16,6 +22,23 @@
                   class="invalid-feedback"
                 >
                   <span v-if="!$v.data.name.required">Este campo es obligatorio.</span>
+                </div>
+            </div>
+          </div>
+          <div role="group" class="form-row form-group mb-3">
+            <label for="email" class="col-12 col-form-label">Color</label>
+            <div class="col">
+              <b-form-input
+                  id="input-2"
+                  v-model="data.colour"
+                  type="color"
+                  :class="{ 'is-invalid': $v.data.colour.$error }"
+                ></b-form-input>
+                <div
+                  v-if="$v.data.colour.$error"
+                  class="invalid-feedback"
+                >
+                  <span v-if="!$v.data.colour.required">Este campo es obligatorio.</span>
                 </div>
             </div>
           </div>
@@ -84,7 +107,8 @@ export default {
   validations: {
     data: {
       name: { required },
-      geometria: { required }
+      geometria: { required },
+      colour: { required }
     }
   },
   data() {
@@ -93,7 +117,9 @@ export default {
       data: {
         id: null,
         name: "",
-        geometria: null
+        geometria: null,
+        colour: "",
+        is_active: true
       },
       polygon: null,
       loading: false
@@ -135,7 +161,7 @@ export default {
       for (let index = 0; index < this.drivers.length; index++) {
         const element = this.drivers[index];
         if(this.zoneDriver.id != element.id) {
-          this.createPolygon(element.geometria.coordinates[0], '#433F3E', 0.2, false)
+          this.createPolygon(element.geometria.coordinates[0], '#5c60d6', 0.2, false)
         }
       }
     },
@@ -145,7 +171,7 @@ export default {
         this.polygon.setMap(null);
       }
       const position = coordinates[0][0];
-      this.polygon = this.createPolygon(coordinates[0], "#D94A43", 0.7, true)
+      this.polygon = this.createPolygon(coordinates[0], "#D94A43", 0.7 , true)
       var bounds = new this.google.maps.LatLngBounds();
       this.polygon.getPath().forEach(function (path) {
         bounds.extend(path);

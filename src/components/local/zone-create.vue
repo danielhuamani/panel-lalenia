@@ -1,9 +1,15 @@
 <template>
   <div>
-    <b-modal v-model="show" id="zone-create-modal" size="xl" title="Crear Zona" :scrollable="true" @hidden="hiddenModel">
+    <b-modal v-model="show" id="zone-create-modal" size="xl" title="Crear Cuadrante de Cobertura" :scrollable="true" @hidden="hiddenModel">
       <b-container fluid>
+          <div class="">
+            <div class="form-check form-check-success mb-3">
+              <input type="checkbox" id="formCheckcolor1" v-model="data.is_active" class="form-check-input">
+              <label for="formCheckcolor1" class="form-check-label"> Activo </label>
+            </div>
+          </div>
           <div role="group" class="form-row form-group mb-3">
-              <label for="email" class="col-12 col-form-label">Nombre</label>
+            <label for="email" class="col-12 col-form-label">Nombre</label>
             <div class="col">
               <b-form-input
                   id="input-1"
@@ -16,6 +22,23 @@
                   class="invalid-feedback"
                 >
                   <span v-if="!$v.data.name.required">Este campo es obligatorio.</span>
+                </div>
+            </div>
+          </div>
+          <div role="group" class="form-row form-group mb-3">
+            <label for="email" class="col-12 col-form-label">Color</label>
+            <div class="col">
+              <b-form-input
+                  id="input-2"
+                  v-model="data.colour"
+                  type="color"
+                  :class="{ 'is-invalid': $v.data.colour.$error }"
+                ></b-form-input>
+                <div
+                  v-if="$v.data.colour.$error"
+                  class="invalid-feedback"
+                >
+                  <span v-if="!$v.data.colour.required">Este campo es obligatorio.</span>
                 </div>
             </div>
           </div>
@@ -67,12 +90,17 @@ export default {
     local: {
       type: Object,
       required: true,
-    }
+    },
+    drivers: {
+      type: Array,
+      required: true,
+    },
   },
   validations: {
     data: {
       name: { required },
-      geometria: { required }
+      geometria: { required },
+      colour: { required }
     }
   },
   data() {
@@ -80,7 +108,9 @@ export default {
       show: false,
       data: {
         name: "",
-        geometria: null
+        geometria: null,
+        is_active: true,
+        colour: ''
       },
       polygon: null,
       loading: false
@@ -90,7 +120,6 @@ export default {
     this.show = true
     this.$nextTick(() => {
         this.renderMap()
-      
     });
   },
   methods: {
@@ -108,13 +137,20 @@ export default {
         })
         this.map.setZoom(16)
         if(this.local.geometria) {
-          this.createPolygon(this.local.geometria.coordinates[0])
+          this.createPolygon(this.local.geometria.coordinates[0], '#3ca868', 0.2, false)
         }
+        this.createDriversArea()
         this.draw()
       }
       
     },
-    createPolygon(coordinates) {
+    createDriversArea(){
+      for (let index = 0; index < this.drivers.length; index++) {
+        const element = this.drivers[index];
+        this.createPolygon(element.geometria.coordinates[0], '#5c60d6', 0.2, false)
+      }
+    },
+    createPolygon(coordinates, color, fillOpacity, editable) {
       const paths = coordinates.map((val) => {
         return {
           lat: val[1],
@@ -124,13 +160,15 @@ export default {
       const bermudaTriangle = new this.google.maps.Polygon({
         paths: [paths],
         strokeColor: '#000',
+        editable: editable,
         strokeOpacity: 0.3,
         strokeWeight: 2,
-        fillColor: '#3ca868',
-        fillOpacity: 0.2
+        fillColor: color,
+        fillOpacity: fillOpacity
       })
       bermudaTriangle.setMap(this.map)
       bermudaTriangle.setVisible(true)
+      return bermudaTriangle
     },
     draw() {
       const self = this;
@@ -204,7 +242,7 @@ export default {
       } else {
         this.loading = true;
         try {
-          await LocalDriverService.create(
+          const response = await LocalDriverService.create(
             this.$route.params.id,
             this.data
           );
@@ -214,7 +252,9 @@ export default {
             msg: "Se creo correctamente"
           });
           this.loading = false;
-          this.$emit('closeUpdate')
+          this.$emit('closeCreate', {
+            driver: response.data
+          })
         } catch (error) {
           this.loading = false;
           console.log(error)
