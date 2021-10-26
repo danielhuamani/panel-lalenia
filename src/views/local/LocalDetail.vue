@@ -36,7 +36,7 @@
               </div>
               <div role="group" class="form-row form-group mb-3">
                   <label id="" for="email" class="col-sm-2 col-lg-2  col-12 col-form-label">Ubicación</label>
-                  <div class="col">
+                  <div class="col-lg-10 col-sm-10 col-12">
                     <div class="map" id="map"></div>
                   </div>
               </div>
@@ -51,7 +51,7 @@
               <a href="#" class="text-success stretched-link" @click.prevent="openModalCreate()">Crear Zona</a>
             </div>
           </div> -->
-          <div class="col-md-3 col-2 mb-4" v-for="(driver, index) in drivers" :key="driver.id">
+          <div class="col-md-3 col-12 mb-4" v-for="(driver, index) in drivers" :key="driver.id">
             <div class="zone ">
               <div @click="openModalUpdate(driver, index)" class="mb-3">
                 <p class="text-success mb-1" >{{driver.name}} 

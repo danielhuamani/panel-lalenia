@@ -1,7 +1,7 @@
 <template>
   <div role="group" class="form-row form-group mb-3">
     <label id="" for="email" class="col-sm-2 col-lg-2  col-12 col-form-label">Cuadrantes</label>
-    <div class="col">
+    <div class="col-lg-10 col-12">
       <div class="map" id="map-zone-coverage"></div>
     </div>
   </div>
