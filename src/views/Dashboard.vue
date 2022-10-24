@@ -2,14 +2,54 @@
 <template>
   <Layout>
     <PageHeader :title="title" :items="items" />
-    
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mini-stats-wid">
+              <OrderByDateEarn
+                :total="order_by_date.total_earn"
+              ></OrderByDateEarn>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mini-stats-wid">
+              <OrderByDate :total="order_by_date.total"></OrderByDate>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card mini-stats-wid">
+              <OrderByDateEarnAvg
+                :total="order_by_date.total_average_earn"
+              ></OrderByDateEarnAvg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6">
+            <OrderByPaymentMethod></OrderByPaymentMethod>
+          </div>
+          <div class="col-6">
+            <RankingProduct></RankingProduct>
+          </div>
+        </div>
+      </div>
+    </div>
   </Layout>
 </template>
 <script>
 import Layout from "../layouts/main";
 import appConfig from "@/app.config";
 import PageHeader from "@/components/page-header";
-
+import OrderByDate from "@/components/metric/order-by-date";
+import OrderByDateEarn from "@/components/metric/order-by-date-earn";
+import OrderByDateEarnAvg from "@/components/metric/order-by-date-earn-avg";
+import OrderByPaymentMethod from "@/components/metric/order-by-payment-methods";
+import RankingProduct from "@/components/metric/ranking-product";
+import MetricService from "@/services/metric-service";
 /**
  * Dashboard Component
  */
@@ -26,112 +66,36 @@ export default {
   components: {
     Layout,
     PageHeader,
+    OrderByDate,
+    OrderByDateEarn,
+    OrderByDateEarnAvg,
+    OrderByPaymentMethod,
+    RankingProduct,
   },
   data() {
     return {
       title: "Dashboard",
-      items: [
-        {
-          text: "Dashboards",
-          href: "/",
-        },
-        {
-          text: "Default",
-          active: true,
-        },
-      ],
-      statData: [
-        {
-          icon: "bx bx-copy-alt",
-          title: "Orders",
-          value: "1,235",
-        },
-        {
-          icon: "bx bx-archive-in",
-          title: "Revenue",
-          value: "$35, 723",
-        },
-        {
-          icon: "bx bx-purchase-tag-alt",
-          title: "Average Price",
-          value: "$16.2",
-        },
-      ],
-      transactions: [
-        {
-          id: "#SK2540",
-          name: "Neal Matthews",
-          date: "07 Oct, 2019",
-          total: "$400",
-          status: "Paid",
-          payment: ["fa-cc-mastercard", "Mastercard"],
-          index: 1,
-        },
-        {
-          id: "#SK2541",
-          name: "Jamal Burnett",
-          date: "07 Oct, 2019",
-          total: "$380",
-          status: "Chargeback",
-          payment: ["fa-cc-visa", "Visa"],
-          index: 2,
-        },
-        {
-          id: "#SK2542",
-          name: "Juan Mitchell",
-          date: "06 Oct, 2019",
-          total: "$384",
-          status: "Paid",
-          payment: ["fab fa-cc-paypal", "Paypal"],
-          index: 3,
-        },
-        {
-          id: "#SK2543",
-          name: "Barry Dick",
-          date: "05 Oct, 2019",
-          total: "$412",
-          status: "Paid",
-          payment: ["fa-cc-mastercard", "Mastercard"],
-          index: 4,
-        },
-        {
-          id: "#SK2544",
-          name: "Ronald Taylor",
-          date: "04 Oct, 2019",
-          total: "$404",
-          status: "Refund",
-          payment: ["fa-cc-visa", "Visa"],
-          index: 5,
-        },
-        {
-          id: "#SK2545",
-          name: "Jacob Hunter",
-          date: "04 Oct, 2019",
-          total: "$392",
-          status: "Paid",
-          payment: ["fab fa-cc-paypal", "Paypal"],
-          index: 6,
-        },
-      ],
-      showModal: false,
-      isLoading: false,
-      fullPage: true,
-      canCancel: false,
-      useSlot: false,
-      loader: "spinner",
-      color: "#007bff",
-      bgColor: "#ffffff",
-      height: 128,
-      width: 128,
-      timeout: 3000, //ms
-      fetchingStats: true,
-      earningStatus: true,
+      items: [],
+      order_by_date: {
+        total: 0,
+        total_earn: 0,
+        total_average_earn: 0,
+      },
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.showModal = true;
-    }, 1500);
+  created() {
+    this.getOrderByDate();
+  },
+  mounted() {},
+  methods: {
+    getOrderByDate() {
+      MetricService.getOrderByDate().then((response) => {
+        this.order_by_date.total = response.data.total;
+        this.order_by_date.total_earn = response.data.total_earn;
+        this.order_by_date.total_average_earn =
+          response.data.total_average_earn;
+      });
+    },
   },
 };
 </script>
