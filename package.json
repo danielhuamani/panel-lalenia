@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.12.5",
-    "apexcharts": "^3.6.12",
+    "apexcharts": "^3.26.0",
     "axios": "^0.22.0",
     "bootstrap": "^5.1.1",
     "bootstrap-vue": "^2.21.2",

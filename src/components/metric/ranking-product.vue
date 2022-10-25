@@ -66,22 +66,42 @@ export default {
         to: "",
       },
       reporte: [],
+      today: "",
     };
   },
   created() {
-    let today = new Date();
-    this.filter.from = `${1}/${today.getFullYear()}`;
-    this.filter.to = `${today.getMonth() + 1}/${today.getFullYear()}`;
+    this.today = new Date();
+    this.filter.from = `${1}/${this.today.getFullYear()}`;
+    this.filter.to = `${this.today.getMonth() + 1}/${this.today.getFullYear()}`;
     this.getData();
   },
   computed: {
     baseChart() {
       let chart = {
-        series: this.reporte.map((x) => {
-          return { name: x.name, data: [x.total_products] };
-        }),
+        series: [
+          {
+            name: "Cantidad",
+            data: this.reporte.map((x) => {
+              return x.total_products;
+            }),
+          },
+        ],
         chartOptions: {
-          chart: {},
+          chart: {
+            toolbar: {
+              export: {
+                csv: {
+                  filename: `RankingProductos ${this.filter.from} - ${this.filter.to}`,
+                  columnDelimiter: ",",
+                  headerCategory: "Productos",
+                  headerValue: "value",
+                  dateFormatter(timestamp) {
+                    return new Date(timestamp).toDateString();
+                  },
+                },
+              },
+            },
+          },
           legend: {
             show: true,
             position: "top",
@@ -91,7 +111,13 @@ export default {
               dataLabels: {
                 position: "bottom", // top, center, bottom
               },
+              columnWidth: "45%",
+              distributed: true,
             },
+          },
+
+          zoom: {
+            enabled: true,
           },
           dataLabels: {
             enabled: true,
@@ -105,11 +131,16 @@ export default {
             borderColor: "#f1f1f1",
           },
           xaxis: {
-            categories: ["Metodo de pago"],
+            categories: this.reporte.map((x) => {
+              return x.name;
+            }),
             axisBorder: {
               show: false,
             },
             axisTicks: {
+              show: false,
+            },
+            labels: {
               show: false,
             },
             tooltip: {
@@ -138,12 +169,12 @@ export default {
                 fontSize: "12px",
                 fontWeight: 400,
                 fontFamily: "Open Sans",
-                colors: ["#7286EA"],
+                colors: ["#333"],
                 backgroundColor: "#e7e7e7",
               },
             },
             title: {
-              text: "Pedidos",
+              text: "Cantidad",
               style: {
                 colors: "#fff",
                 fontSize: "12px",
