@@ -3,7 +3,7 @@ export default [
     path: "/dashboard",
     name: "dashboard",
     meta: {
-      authRequired: true,
+      // authRequired: true,
     },
     component: () => import("../views/Dashboard"),
   },
@@ -27,6 +27,11 @@ export default [
     path: "/",
     name: "login",
     component: () => import("../views/Login"),
+  },
+  {
+    path: "/clientes",
+    name: "customers",
+    component: () => import("../views/Customers"),
   },
   {
     path: "/404",

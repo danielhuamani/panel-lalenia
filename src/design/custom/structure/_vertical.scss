@@ -8,6 +8,7 @@
     li {
         display: block;
         width: 100%;
+        margin: 5px 0;
     }
 
     .mm-collapse {
@@ -40,7 +41,9 @@
     margin-top: 0;
     position: fixed;
     top: $header-height;
-    box-shadow: $box-shadow;
+    // box-shadow: $box-shadow;
+    // border-right: 1px solid $border-color-card;
+    padding: 0px 12px;
 }
 
 .main-content {
@@ -80,12 +83,13 @@
         li {
             a {
                 display: block;
-                padding: .625rem 1.5rem;
+                padding: .425rem 0.7rem;
                 color: $sidebar-menu-item-color;
                 position: relative;
                 font-size: 13px;
+                font-weight: 500;
                 transition: all .4s;
-
+                border-radius: 10px;
                 i {
                     display: inline-block;
                     min-width: 1.75rem;
@@ -99,7 +103,7 @@
 
                 &:hover {
                     color: $sidebar-menu-item-hover-color;
-
+                    background-color: $menu-item-active-bg;
                     i {
                         color: $sidebar-menu-item-hover-color;
                     }
@@ -157,16 +161,17 @@
 .mm-active {
     color: $sidebar-menu-item-active-color !important;
     > a{
-        color: $sidebar-menu-item-active-color !important;
+        // color: $sidebar-menu-item-active-color !important;
+        background-color: $menu-item-active-bg;
         i {
-            color: $sidebar-menu-item-active-color !important;
+            // color: $sidebar-menu-item-active-color !important;
         }
     }
     .active {
-        color: $sidebar-menu-item-active-color !important;
-
+        // color: $sidebar-menu-item-active-color !important;
+        background-color: $menu-item-active-bg;
         i {
-            color: $sidebar-menu-item-active-color !important;
+            // color: $sidebar-menu-item-active-color !important;
         }
     }
     > i {
@@ -258,7 +263,7 @@
                         padding: 15px 20px;
                         min-height: 55px;
                         transition: none;
-                        
+                        font-weight: 500;
                         &:hover,
                         &:active,
                         &:focus {
@@ -311,6 +316,7 @@
                                 position: relative;
                                 width: 190px;
                                 z-index: 6;
+                                font-weight: 500;
                                 color: $sidebar-menu-sub-item-color;
 
                                 &:hover {
@@ -565,7 +571,7 @@ body[data-sidebar-size="small"] {
 
 body[data-sidebar="colored"] {
     .vertical-menu{
-        background-color: $primary;
+        // background-color: $primary;
     }
     .navbar-brand-box{
         background-color: $primary;

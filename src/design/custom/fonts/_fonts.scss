@@ -2,4 +2,30 @@
 // Google font - Poppins
 //
 
-@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+@font-face {
+    font-family: 'ProximaNova-Regular';
+    src: url('~@/assets/fonts/NovaRegular/ProximaNova-Regular.eot');
+    src: url('~@/assets/fonts/NovaRegular/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
+         url('~@/assets/fonts/NovaRegular/ProximaNova-Regular.svg#ProximaNova-Regular') format('svg'),
+         url('~@/assets/fonts/NovaRegular/ProximaNova-Regular.ttf') format('truetype'),
+         url('~@/assets/fonts/NovaRegular/ProximaNova-Regular.woff') format('woff'),
+         url('~@/assets/fonts/NovaRegular/ProximaNova-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+@font-face {
+font-family: 'ProximaNova-Semibold';
+src: url('~@/assets/fonts/NovaSemi/ProximaNova-Semibold.eot');
+src: url('~@/assets/fonts/NovaSemi/ProximaNova-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('~@/assets/fonts/NovaSemi/ProximaNova-Semibold.svg#ProximaNova-Semibold') format('svg'),
+        url('~@/assets/fonts/NovaSemi/ProximaNova-Semibold.ttf') format('truetype'),
+        url('~@/assets/fonts/NovaSemi/ProximaNova-Semibold.woff') format('woff'),
+        url('~@/assets/fonts/NovaSemi/ProximaNova-Semibold.woff2') format('woff2');
+font-weight: normal;
+font-style: normal;
+}
+  
+    

@@ -5,31 +5,32 @@
 //
 
 // Vertical Sidebar - Default Light
-$sidebar-bg: #ffffff;
-$sidebar-menu-item-color: #545a6d;
-$sidebar-menu-sub-item-color: #545a6d;
-$sidebar-menu-item-icon-color: #7f8387;
+$sidebar-bg: #171a1e;
+$sidebar-menu-item-color: hsla(180, 4%, 15%, 1);
+$sidebar-menu-sub-item-color: hsla(180, 4%, 15%, 1);
+$sidebar-menu-item-icon-color: hsla(180, 4%, 15%, 1);
 $sidebar-menu-item-hover-color: #383c40;
 $sidebar-menu-item-active-color: #556ee6;
-$sidebar-width:  250px;
+$sidebar-width:  240px;
 $sidebar-collapsed-width:  70px;
 $sidebar-width-sm:  160px;
+$body-bg: #f5f6f7;
 
 // Vertical Sidebar - Dark343a40
-$sidebar-dark-bg: $dark; //2c313a
-$sidebar-dark-menu-item-color: #a6b0cf;
+$sidebar-dark-bg: #171a1e; //2c313a
+$sidebar-dark-menu-item-color: #fff;
 $sidebar-dark-menu-sub-item-color: #79829c;
 $sidebar-dark-menu-item-icon-color: #6a7187;
 $sidebar-dark-menu-item-hover-color: #ffffff;
 $sidebar-dark-menu-item-active-color: #ffffff;
 
 // Topbar - Deafult Light
-$header-height: 70px;
+$header-height: 60px;
 $header-bg: #ffffff;
 $header-item-color: #555b6d;
 
 // Topbar - Dark
-$header-dark-bg: #2a3042;
+$header-dark-bg: #171a1e;
 $header-dark-item-color: #e9ecef;
 
 // Topbar Search
@@ -45,6 +46,7 @@ $topnav-bg:   #fff;
 
 $menu-item-color: #545a6d;
 $menu-item-active-color: #556ee6;
+$menu-item-active-bg: #232629;
 
 // Right Sidebar
 $rightbar-width:  280px;
@@ -54,7 +56,7 @@ $display-none: none;
 $display-block: block;
 
 // Brand 
-$navbar-brand-box-width: 250px;
+$navbar-brand-box-width: 240px;
 
 // Boxed layout width
 $boxed-layout-width:    1300px;
@@ -345,7 +347,7 @@ $position-values: (
 //
 // Settings for the `<body>` element.
 
-$body-bg:                   #f8f8fb;
+$body-bg:                   #f5f6f7;
 $body-color:                $gray-700;
 $body-text-align:           null;
 
@@ -415,7 +417,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns:                12;
-$grid-gutter-width:           24px;
+$grid-gutter-width:           30px;
 $grid-row-columns:            6;
 
 $gutters: $spacers;
@@ -443,7 +445,7 @@ $border-radius:               .25rem;
 $border-radius-lg:            .4rem;
 $border-radius-sm:            .2rem;
 $border-radius-pill:          50rem;
-
+$border-color-card: hsla(210, 15%, 87%, 1);
 
 $box-shadow-sm:               0 .125rem .25rem rgba($black, .075);
 $box-shadow:                  0 0.75rem 1.5rem rgba(18,38,63,.03);
@@ -478,7 +480,7 @@ $aspect-ratios: (
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      'Poppins', sans-serif;
+$font-family-sans-serif:      "ProximaNova-Regular";
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 // stylelint-enable value-keyword-case

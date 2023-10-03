@@ -3,11 +3,11 @@
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6 col-xl-5">
         <div class="card overflow-hidden">
-          <div class="bg-danger">
+          <div class="bg-soft bg-primary">
             <div class="row">
               <div class="col-7">
-                <div class="text-white p-4">
-                  <h5 class="text-white">Bienvenido</h5>
+                <div class="text-primary p-4">
+                  <h5 class="text-primary">Bienvenido</h5>
                   <p>Inicia sesión para continuar.</p>
                 </div>
               </div>

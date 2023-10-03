@@ -121,7 +121,7 @@ export default {
               <img src="@/assets/images/logo-lenia.svg" alt height="30" />
             </span>
             <span class="logo-lg">
-              <img src="@/assets/images/logo-lenia.svg" alt height="50" />
+              <img src="@/assets/images/logo-lenia.svg" alt height="40" />
             </span>
           </router-link>
         </div>
@@ -202,7 +202,7 @@ export default {
           </a>
         </b-dropdown>
 
-        <div class="dropdown d-inline-block">
+        <!-- <div class="dropdown d-inline-block">
           <button
             type="button"
             class="btn header-item noti-icon right-bar-toggle toggle-right"
@@ -210,7 +210,7 @@ export default {
           >
             <i class="bx bx-cog bx-spin toggle-right"></i>
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </header>

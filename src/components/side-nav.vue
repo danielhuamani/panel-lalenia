@@ -113,6 +113,15 @@ export default {
           <span>Local</span>
         </router-link>
       </li>
+      <li>
+        <router-link
+          :to="{ name: 'customers' }"
+          class="side-nav-link-ref router-link-exact-active router-link-active"
+        >
+          <i class="bx bxs-user"></i>
+          <span>Clientes</span>
+        </router-link>
+      </li>
     </ul>
   </div>
   <!-- Sidebar -->

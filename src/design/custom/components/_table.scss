@@ -3,8 +3,13 @@
 // 
 
 .table {
+  a { 
+    color: $sidebar-menu-item-color;
+    font-weight: bold;
+  }
   th {
       font-weight: $font-weight-bold;
+      background-color: $white;
       &:focus {
         outline: none !important
       }
