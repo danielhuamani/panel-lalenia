@@ -6,7 +6,17 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            
+            <div class="d-flex justify-content-between">
+              <div class="d-flex">
+                <b-button  size="lg" variant="dark">Filtrar</b-button>
+                <b-input-group prepend="$" append=".00">
+                  <b-form-input></b-form-input>
+                </b-input-group>
+              </div>
+              <div class="">
+                <b-button  size="lg" variant="primary">Crear Cliente</b-button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="card">
